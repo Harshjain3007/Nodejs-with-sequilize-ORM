@@ -1,5 +1,5 @@
 const express =require('express')
-require('./models')
+const User =require('./models/user')
 
 const app = express()
 
@@ -9,6 +9,8 @@ app.get('/',(req,res)=>{
     res.send('Hello World')
 })
 
+User.sync({force:true})
+//User.drop()
 
 app.listen(3000,()=>{
     console.log('app is running on port 3000');
