@@ -1,4 +1,4 @@
-const { Sequelize } = require('sequelize')
+const { Sequelize,DataTypes,Model } = require('sequelize')
 const env = require('../env')
 
 
@@ -7,6 +7,9 @@ const sequelize = new Sequelize(env.db_name, env.db_username, env.db_password, {
     dialect:'mysql' /* one of 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
   })
 
+  const db ={}
+  db.sequelize = sequelize
+  db.sequelize = sequelize
 
   try {
     sequelize.authenticate();
@@ -15,4 +18,10 @@ const sequelize = new Sequelize(env.db_name, env.db_username, env.db_password, {
     console.error('Unable to connect to the database:', error);
   }
 
-  module.exports = sequelize
+
+    db.contact=require('./contact')(sequelize,DataTypes,)
+   db.user = require('./user')(sequelize,DataTypes,Model)
+  db.sequelize.sync({ force: true });
+
+
+  module.exports = db

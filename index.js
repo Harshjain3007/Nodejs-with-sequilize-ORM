@@ -1,5 +1,6 @@
 const express =require('express')
-const User =require('./models/user')
+require('./models')
+
 
 const app = express()
 
@@ -9,7 +10,8 @@ app.get('/',(req,res)=>{
     res.send('Hello World')
 })
 
-User.sync({force:true})
+//User.sync({force:true})
+//Contact.sync({force:true})
 //User.drop()
 
 app.listen(3000,()=>{
