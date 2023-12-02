@@ -4,6 +4,7 @@ const env = require('../env')
 
 const sequelize = new Sequelize(env.db_name, env.db_username, env.db_password, {
     host: 'localhost',
+    logging:false, //by default this is true but if we do false it will not show in terminal
     dialect:'mysql' /* one of 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
   })
 
@@ -21,7 +22,7 @@ const sequelize = new Sequelize(env.db_name, env.db_username, env.db_password, {
 
     db.contact=require('./contact')(sequelize,DataTypes,)
    db.user = require('./user')(sequelize,DataTypes,Model)
-  db.sequelize.sync({ force: true });
+  db.sequelize.sync({ force: false });
 
 
   module.exports = db
