@@ -40,6 +40,9 @@ app.get('/one-to-one',usercontroller.OneToOneUser)
 
 app.get('/one-to-many',usercontroller.OneToManyUser)
 
+app.get('/many-to-many',usercontroller.ManyToManyUser)
+
+app.get('/paranoid',usercontroller.paranoidUser)
 
 app.listen(3000,()=>{
     console.log('app is running on port 3000');

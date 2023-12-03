@@ -23,11 +23,16 @@ const sequelize = new Sequelize(env.db_name, env.db_username, env.db_password, {
 
     db.contact=require('./contact')(sequelize,DataTypes,)
    db.user = require('./user')(sequelize,DataTypes,Model)
+   db.userContacts = require('./userContacts')(sequelize,DataTypes,db.user,db.contact)
 
     // db.user.hasOne(db.contact,{foreignKey: 'user_id',as:'contactdetails'});
     // db.contact.belongsTo(db.user,);
-    db.user.hasOne(db.contact,{foreignKey: 'user_id',as:'contactdetails'});
-    db.contact.belongsTo(db.user,{foreignKey: 'user_id',as:'userdetails'});
+    // db.user.hasOne(db.contact,{foreignKey: 'user_id',as:'contactdetails'});
+    // db.contact.belongsTo(db.user,{foreignKey: 'user_id',as:'userdetails'});
+
+
+      db.user.belongsToMany(db.contact, { through: db.userContacts });
+      db.contact.belongsToMany(db.user,{ through: db.userContacts });
 
   db.sequelize.sync({ force:false});
 

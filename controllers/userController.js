@@ -275,6 +275,50 @@ var data=await Contact.findAll({
   res.status(200).json({data:data})
 }
 
+var ManyToManyUser = async(req,res)=>{
+//  var data = await User.create({firstName:"rahul",lastName:"singh"})
+//  if(data && data.id){
+//   await Contact.create({ permanent_address:"mumbai",current_address:"pune"})
+//  }
+//   res.status(200).json({ data:data})
+// // var data=await Contact.findAll({
+//    attributes:['permanent_address','current_address'],
+//   include:[{
+//     model:User,
+//     attributes:['firstName','lastName']
+    
+//   }],
+// })
+var data=await User.findAll({
+  attributes:['firstName','lastName'],
+ include:[{
+   model:Contact,
+   attributes:['permanent_address','current_address']
+   
+ }],
+})
+res.status(200).json({ data:data})
+}
+
+
+var paranoidUser = async(re,res)=>{
+      // var data =await User.create({
+      //   firstName:'shyam',lastName:'kumar'
+      // })
+  //  var data=   await User.destroy({
+  //       where: {
+  //         id: 2
+  //       },
+  //     });
+    // var data=   await User.restore({
+    //     where: {
+    //       id: 1
+    //     },
+    //   });
+  var data =await User.findAll({})
+  res.status(200).json({ data:data})
+}
+
 module.exports = {
   addUser,
   getUsers,
@@ -288,5 +332,7 @@ module.exports = {
   validateUser,
   rawqueriesUser,
   OneToOneUser,
-  OneToManyUser
+  OneToManyUser,
+  ManyToManyUser,
+  paranoidUser
 };
