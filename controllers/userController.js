@@ -1,6 +1,6 @@
 var db = require("../models");
 const user = require("../models/user");
-const {Sequelize,Op} = require('sequelize')
+const {Sequelize,Op,QueryTypes} = require('sequelize')
 var User = db.user;
 
 
@@ -174,6 +174,52 @@ var validateUser = async(req,res)=>{
 }
 
 
+var rawqueriesUser = async(req,res)=>{
+  
+  // const users = await db.sequelize.query("SELECT * FROM `users`", { type: QueryTypes.SELECT,
+  //    model: User,
+  //    mapToModel: true ,
+  //    ///plain:true   plain true will return only one record
+  //  });
+ // const users=  await db.sequelize.query(
+  //   'SELECT * FROM users WHERE firstName = ?',
+  //   {
+  //     replacements: ['Rajeev'],
+  //     type: QueryTypes.SELECT
+  //   }
+  // );
+  // const users=  await db.sequelize.query(
+  //  'SELECT * FROM users WHERE id = :id',
+  //   {
+  //     replacements: {id:'1'},
+  //     type: QueryTypes.SELECT
+  //   }
+  // );
+  //   const users=  await db.sequelize.query(
+  //  'SELECT * FROM users WHERE id IN(:id)',
+  //   {
+  //     replacements: {id:[1,5]},
+  //     type: QueryTypes.SELECT
+  //   }
+  // );
+
+  // const users=  await db.sequelize.query(
+  //   'SELECT * FROM users WHERE firstName LIKE :search_name',
+  //    {
+  //      replacements: {search_name:"Sanjeev"},
+  //      type: QueryTypes.SELECT
+  //    }
+  //  );
+   const users=  await db.sequelize.query(
+    'SELECT * FROM users WHERE id=$id',
+     {
+       bind: {id:"4"},
+       type: QueryTypes.SELECT
+     }
+   );
+  res.status(200).json({ data:users})
+}
+
 
 module.exports = {
   addUser,
@@ -185,5 +231,6 @@ module.exports = {
   queryUser,
   findersUser,
   getSetVirtualUser,
-  validateUser
+  validateUser,
+  rawqueriesUser
 };
