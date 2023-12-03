@@ -1,5 +1,6 @@
 const { Sequelize,DataTypes,Model } = require('sequelize')
 const env = require('../env')
+const user = require('./user')
 
 
 const sequelize = new Sequelize(env.db_name, env.db_username, env.db_password, {
@@ -22,6 +23,12 @@ const sequelize = new Sequelize(env.db_name, env.db_username, env.db_password, {
 
     db.contact=require('./contact')(sequelize,DataTypes,)
    db.user = require('./user')(sequelize,DataTypes,Model)
+
+    // db.user.hasOne(db.contact,{foreignKey: 'user_id',as:'contactdetails'});
+    // db.contact.belongsTo(db.user,);
+    db.user.hasOne(db.contact,{foreignKey: 'user_id',as:'contactdetails'});
+    db.contact.belongsTo(db.user,{foreignKey: 'user_id',as:'userdetails'});
+
   db.sequelize.sync({ force:false});
 
 

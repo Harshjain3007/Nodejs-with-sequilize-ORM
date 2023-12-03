@@ -1,3 +1,4 @@
+const { INTEGER } = require("sequelize");
 
 module.exports =(sequelize,DataTypes)=>{
 
@@ -10,7 +11,9 @@ const Contact = sequelize.define('Contact', {
   current_address: {
     type: DataTypes.STRING
     // allowNull defaults to true
-  }
+  },
+  user_id:DataTypes.INTEGER
+    
 }, {
   // Other model options go here
 });

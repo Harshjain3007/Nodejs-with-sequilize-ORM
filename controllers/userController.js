@@ -2,6 +2,7 @@ var db = require("../models");
 const user = require("../models/user");
 const {Sequelize,Op,QueryTypes} = require('sequelize')
 var User = db.user;
+var Contact =db.contact;
 
 
 
@@ -220,6 +221,59 @@ var rawqueriesUser = async(req,res)=>{
   res.status(200).json({ data:users})
 }
 
+var OneToOneUser = async(req,res)=>{
+//  var data = await User.create({firstName:"mohit",lastName:"singh"})
+//  if(data && data.id){
+//   await Contact.create({ permanent_address:"abc",current_address:"xyz",user_id:data.id})
+//  }
+//   res.status(200).json({ data:data})
+// var data=await User.findAll({
+//   attributes:['firstName','lastName'],
+//   include:[{
+
+//     model:Contact,
+//     as:'contactdetails',
+//     attributes:['permanent_address','current_address']
+//   }],
+//   where:{id:2}
+// })
+var data=await Contact.findAll({
+  attributes:['permanent_address','current_address'],
+  include:[{
+    model:User,
+    as:'userdetails',
+    attributes:['firstName','lastName']
+   
+  }],
+  where:{id:2}
+})
+res.status(200).json({ data:data})
+}
+
+var OneToManyUser = async(req,res)=>{
+ //var data= await Contact.create({ permanent_address:"Gurugram",current_address:"Meerut",user_id:'1'})
+//  var data=await User.findAll({
+//   attributes:['firstName','lastName'],
+//   include:[{
+
+//     model:Contact,
+//     as:'contactdetails',
+//     attributes:['permanent_address','current_address']
+//   }],
+//  // where:{id:2}
+// })
+var data=await Contact.findAll({
+  attributes:['permanent_address','current_address'],
+  include:[{
+    model:User,
+    as:'userdetails',
+    attributes:['firstName','lastName']
+   
+  }],
+  where:{id:2}
+})
+  res.status(200).json({data:data})
+}
 
 module.exports = {
   addUser,
@@ -232,5 +286,7 @@ module.exports = {
   findersUser,
   getSetVirtualUser,
   validateUser,
-  rawqueriesUser
+  rawqueriesUser,
+  OneToOneUser,
+  OneToManyUser
 };

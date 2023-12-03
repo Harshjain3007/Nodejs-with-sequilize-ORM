@@ -36,6 +36,11 @@ app.get('/validate',usercontroller.validateUser)
 
 app.get('/raw-queries',usercontroller.rawqueriesUser)
 
+app.get('/one-to-one',usercontroller.OneToOneUser)
+
+app.get('/one-to-many',usercontroller.OneToManyUser)
+
+
 app.listen(3000,()=>{
     console.log('app is running on port 3000');
 })
