@@ -22,7 +22,7 @@ const sequelize = new Sequelize(env.db_name, env.db_username, env.db_password, {
 
     db.contact=require('./contact')(sequelize,DataTypes,)
    db.user = require('./user')(sequelize,DataTypes,Model)
-  db.sequelize.sync({ force: false });
+  db.sequelize.sync({ force:false});
 
 
   module.exports = db
