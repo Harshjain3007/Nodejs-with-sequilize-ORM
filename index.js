@@ -44,6 +44,8 @@ app.get('/many-to-many',usercontroller.ManyToManyUser)
 
 app.get('/paranoid',usercontroller.paranoidUser)
 
+app.get('/loading',usercontroller.loadingUser)
+
 app.listen(3000,()=>{
     console.log('app is running on port 3000');
 })

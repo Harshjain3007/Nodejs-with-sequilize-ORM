@@ -319,6 +319,33 @@ var paranoidUser = async(re,res)=>{
   res.status(200).json({ data:data})
 }
 
+
+var loadingUser = async(req,res)=>{
+//   var data = await User.create({firstName:"rahul",lastName:"singh"})
+//  if(data && data.id){
+//   await Contact.create({ permanent_address:"pune",current_address:"mumbai","UserId":data.id})
+//  }
+// var data = await User.findOne({
+//   where:{
+//     id:2
+//   },
+ 
+// })
+
+// var contactData = await data.getContacts()    //This concept is lazyloading
+
+var data = await User.findAll({
+ 
+    attributes:['firstName','lastName'],
+   include:[{
+     model:Contact,
+     attributes:['permanent_address','current_address']
+     }],
+
+})
+  res.status(200).json({ data:data})
+}
+
 module.exports = {
   addUser,
   getUsers,
@@ -334,5 +361,6 @@ module.exports = {
   OneToOneUser,
   OneToManyUser,
   ManyToManyUser,
-  paranoidUser
+  paranoidUser,
+  loadingUser
 };

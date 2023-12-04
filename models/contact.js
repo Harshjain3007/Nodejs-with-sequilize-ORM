@@ -12,6 +12,7 @@ const Contact = sequelize.define('Contact', {
     type: DataTypes.STRING
     // allowNull defaults to true
   },
+  UserId:DataTypes.INTEGER
     
 }, {
   // Other model options go here

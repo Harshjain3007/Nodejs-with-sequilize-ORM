@@ -27,12 +27,14 @@ const sequelize = new Sequelize(env.db_name, env.db_username, env.db_password, {
 
     // db.user.hasOne(db.contact,{foreignKey: 'user_id',as:'contactdetails'});
     // db.contact.belongsTo(db.user,);
-    // db.user.hasOne(db.contact,{foreignKey: 'user_id',as:'contactdetails'});
+    // db.user.hasMany(db.contact,{foreignKey: 'user_id',as:'contactdetails'});
     // db.contact.belongsTo(db.user,{foreignKey: 'user_id',as:'userdetails'});
+    db.user.hasMany(db.contact,{foreignKey: 'UserId'});
+    db.contact.belongsTo(db.user,{foreignKey: 'UserId'})
 
 
-      db.user.belongsToMany(db.contact, { through: db.userContacts });
-      db.contact.belongsToMany(db.user,{ through: db.userContacts });
+      // db.user.belongsToMany(db.contact, { through: db.userContacts });
+      // db.contact.belongsToMany(db.user,{ through: db.userContacts });
 
   db.sequelize.sync({ force:false});
 
