@@ -2,20 +2,20 @@
 
 module.exports =(sequelize,DataTypes)=>{
 
-const Contact = sequelize.define('Contact', {
+const Education = sequelize.define('educations', {
   // Model attributes are defined here
-  permanent_address: {
+     class_name: {
     type: DataTypes.STRING,
     allowNull: false
   },
-  current_address: {
-    type: DataTypes.STRING
+  passing_year: {
+    type: DataTypes.INTEGER
     // allowNull defaults to true
   },
-  UserId:DataTypes.INTEGER
+  ContactId:DataTypes.INTEGER
     
 }, {
   // Other model options go here
 });
-return Contact
+return Education
 }

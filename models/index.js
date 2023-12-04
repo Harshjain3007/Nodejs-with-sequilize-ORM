@@ -5,7 +5,7 @@ const user = require('./user')
 
 const sequelize = new Sequelize(env.db_name, env.db_username, env.db_password, {
     host: 'localhost',
-    logging:false, //by default this is true but if we do false it will not show in terminal
+    logging:true, //by default this is true but if we do false it will not show in terminal
     dialect:'mysql' /* one of 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
   })
 
@@ -24,6 +24,7 @@ const sequelize = new Sequelize(env.db_name, env.db_username, env.db_password, {
     db.contact=require('./contact')(sequelize,DataTypes,)
    db.user = require('./user')(sequelize,DataTypes,Model)
    db.userContacts = require('./userContacts')(sequelize,DataTypes,db.user,db.contact)
+   db.education = require('./education')(sequelize,DataTypes)
 
     // db.user.hasOne(db.contact,{foreignKey: 'user_id',as:'contactdetails'});
     // db.contact.belongsTo(db.user,);
@@ -33,10 +34,14 @@ const sequelize = new Sequelize(env.db_name, env.db_username, env.db_password, {
     db.contact.belongsTo(db.user,{foreignKey: 'UserId'})
 
 
+    db.contact.hasMany(db.education,{foreignKey: 'ContactId'});
+    db.contact.belongsTo(db.user,{foreignKey: 'ContactId'})
+
+
       // db.user.belongsToMany(db.contact, { through: db.userContacts });
       // db.contact.belongsToMany(db.user,{ through: db.userContacts });
 
-  db.sequelize.sync({ force:false});
+  db.sequelize.sync({ force:false})
 
 
   module.exports = db

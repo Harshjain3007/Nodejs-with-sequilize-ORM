@@ -3,6 +3,7 @@ const user = require("../models/user");
 const {Sequelize,Op,QueryTypes} = require('sequelize')
 var User = db.user;
 var Contact =db.contact;
+var Education = db.education
 
 
 
@@ -337,12 +338,37 @@ var loadingUser = async(req,res)=>{
 var data = await User.findAll({
  
     attributes:['firstName','lastName'],
-   include:[{
+   include:[{                                  //this is eager loading
      model:Contact,
      attributes:['permanent_address','current_address']
      }],
 
-})
+})  
+res.status(200).json({ data:data})
+}
+
+
+var eagerUser = async(req,res)=>{
+ var data = await User.findAll({
+      //  include:[{
+      //   model:Contact ,   //by default we get left outer join,  
+      //   requred:false,    //by required false we get inner join
+      //   right:true          //by required false we get right join
+      //  },
+      //  {
+      //   model:Education ,   //by default we get left outer join,  
+      //   requred:false,    //by required false we get inner join
+      //   right:true          //by required false we get right join
+      //  },
+ //]                  
+      include:{all:true,nested:true}    // when we take all true and nested true all relations
+      // include:{                       // are by default leftouter join
+      //   model:Contact,
+      //  include: {
+      //    model:Education
+      //   }
+      // }
+  })
   res.status(200).json({ data:data})
 }
 
@@ -362,5 +388,6 @@ module.exports = {
   OneToManyUser,
   ManyToManyUser,
   paranoidUser,
-  loadingUser
+  loadingUser,
+  eagerUser
 };
