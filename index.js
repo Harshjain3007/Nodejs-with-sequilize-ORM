@@ -48,6 +48,8 @@ app.get('/loading',usercontroller.loadingUser)
 
 app.get('/eager',usercontroller.eagerUser)
 
+app.get('/creator',usercontroller.creatorUser)
+
 app.listen(3000,()=>{
     console.log('app is running on port 3000');
 })

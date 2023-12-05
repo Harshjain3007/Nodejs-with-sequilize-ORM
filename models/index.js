@@ -5,7 +5,7 @@ const user = require('./user')
 
 const sequelize = new Sequelize(env.db_name, env.db_username, env.db_password, {
     host: 'localhost',
-    logging:true, //by default this is true but if we do false it will not show in terminal
+    logging:false, //by default this is true but if we do false it will not show in terminal
     dialect:'mysql' /* one of 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
   })
 
@@ -25,13 +25,19 @@ const sequelize = new Sequelize(env.db_name, env.db_username, env.db_password, {
    db.user = require('./user')(sequelize,DataTypes,Model)
    db.userContacts = require('./userContacts')(sequelize,DataTypes,db.user,db.contact)
    db.education = require('./education')(sequelize,DataTypes)
+   db.customer = require('./customer')(sequelize,DataTypes,)
+   db.profile = require('./profile')(sequelize,DataTypes,)
+
+   db.customer.belongsToMany(db.profile,{through:"User_Profiles"})
+   db.profile.belongsToMany(db.customer,{through:"User_Profiles"})
 
     // db.user.hasOne(db.contact,{foreignKey: 'user_id',as:'contactdetails'});
     // db.contact.belongsTo(db.user,);
     // db.user.hasMany(db.contact,{foreignKey: 'user_id',as:'contactdetails'});
     // db.contact.belongsTo(db.user,{foreignKey: 'user_id',as:'userdetails'});
     db.user.hasMany(db.contact,{foreignKey: 'UserId'});
-    db.contact.belongsTo(db.user,{foreignKey: 'UserId'})
+   // db.contact.belongsTo(db.user,{foreignKey: 'UserId'})
+   db.contactUser = db.contact.belongsTo(db.user,{foreignKey: 'UserId',as:'users'})
 
 
     db.contact.hasMany(db.education,{foreignKey: 'ContactId'});
@@ -41,7 +47,7 @@ const sequelize = new Sequelize(env.db_name, env.db_username, env.db_password, {
       // db.user.belongsToMany(db.contact, { through: db.userContacts });
       // db.contact.belongsToMany(db.user,{ through: db.userContacts });
 
-  db.sequelize.sync({ force:false})
+  db.sequelize.sync({ force:true})
 
 
   module.exports = db

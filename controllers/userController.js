@@ -372,6 +372,32 @@ var eagerUser = async(req,res)=>{
   res.status(200).json({ data:data})
 }
 
+var creatorUser = async(req,res)=>{
+ await Contact.bulkCreate([{permanent_address:'gaziabad',current_address:'meerut',
+ users:{
+  firstName:"shyam",
+  lastName:"singh"
+ }
+},
+{permanent_address:'pune',current_address:'mumbai',
+ users:{
+  firstName:"rahul",
+  lastName:"sharma"
+ }
+}
+],{
+  include:[db.contactUser]
+})
+ 
+ 
+  var data = await User.findAll({
+    include:{
+      model:Contact
+    }
+    })
+  res.status(200).json({ data:data})
+}
+
 module.exports = {
   addUser,
   getUsers,
@@ -389,5 +415,6 @@ module.exports = {
   ManyToManyUser,
   paranoidUser,
   loadingUser,
-  eagerUser
+  eagerUser,
+  creatorUser
 };
